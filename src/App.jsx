@@ -1,10 +1,16 @@
 import React from 'react'
-import { Card } from './components/Card'
-import { CartDrawer } from './components/CartDrawer'
-import { Header } from './components/Header'
-import { Shadow } from './components/Shadow'
+import { Card } from './components/Card/Card'
+import { CartDrawer } from './components/CartDrawer/CartDrawer'
+import { Header } from './components/Header/Header'
+import { Shadow } from './components/Shadow/Shadow'
 
 const App = () => {
+  const arr = [
+    { title: "Man's Sneakers Nike Blazer Mid Suede", price: "$240", imageUrl: "/img/sneakers/1.jpg" },
+    { title: "Man's Sneakers Nike Air Max 270", price: "$270", imageUrl: "/img/sneakers/2.jpg" },
+    { title: "Man's Sneakers Nike Blazer Mid Suede", price: "$200", imageUrl: "/img/sneakers/3.jpg" },
+    { title: "Man's Sneakers Puma X Aka Boku Future Rider", price: "$175", imageUrl: "/img/sneakers/4.jpg" }]
+
   return (
     <div className='wrapper clear'>
       <Shadow>
@@ -20,7 +26,7 @@ const App = () => {
           </div>
         </div>
         <div className="d-flex justify-between mt-20">
-          <Card />
+          {arr.map(card => <Card title={card.title} price={card.price} imageUrl={card.imageUrl} />)}
         </div>
       </div>
     </div>

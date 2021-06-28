@@ -1,19 +1,20 @@
 import React from 'react'
+import s from './card.module.scss'
 
-export const Card = () => {
+export const Card = (props) => {
     return (
-        <div className='card'>
-            <div className='favorite'>
+        <div className={s.card}>
+            <div className={s.favorite}>
                 <img src='/img/icons/default-heart.png' alt='likedSneakers' />
             </div>
-            <img width={133} height={112} src='/img/sneakers/1.jpg' alt='Nike Blazer Mid Suede' />
-            <h5 className='mt-10 mb-10'>Man's Sneakers Nike Blazer Mid Suede</h5>
+            <img width={133} height={112} src={props.imageUrl} alt='Nike Blazer Mid Suede' />
+            <h5 className='mt-10 mb-10'>{props.title}</h5>
             <div className='d-flex justify-between align-center'>
                 <div className='d-flex flex-column'>
                     <span>Price: </span>
-                    <strong>240$</strong>
+                    <strong>{props.price}</strong>
                 </div>
-                <button className="button">
+                <button className={s.button}>
                     <img src='/img/icons/addButton.svg' alt='addToCardButton' />
                 </button>
             </div>

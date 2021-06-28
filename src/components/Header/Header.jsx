@@ -1,8 +1,9 @@
 import React from 'react'
+import s from './header.module.scss'
 
 export const Header = () => {
     return (
-        <header className='d-flex justify-between align-center p-40'>
+        <header className={`${s.header} d-flex justify-between align-center p-40`}>
             <div className="d-flex align-center">
                 <img width={40} height={40} src='/img/logo.png' alt='mainLogo' />
                 <div>
