@@ -1,34 +1,56 @@
-import React from 'react'
-import { Card } from './components/Card/Card'
+import React, { useEffect, useState } from 'react'
 import { CartDrawer } from './components/CartDrawer/CartDrawer'
 import { Header } from './components/Header/Header'
 import { Shadow } from './components/Shadow/Shadow'
+import { Home } from './pages/Home'
+import axios from 'axios'
+import { Route } from 'react-router-dom'
 
 const App = () => {
-  const arr = [
-    { title: "Man's Sneakers Nike Blazer Mid Suede", price: "$240", imageUrl: "/img/sneakers/1.jpg" },
-    { title: "Man's Sneakers Nike Air Max 270", price: "$270", imageUrl: "/img/sneakers/2.jpg" },
-    { title: "Man's Sneakers Nike Blazer Mid Suede", price: "$200", imageUrl: "/img/sneakers/3.jpg" },
-    { title: "Man's Sneakers Puma X Aka Boku Future Rider", price: "$175", imageUrl: "/img/sneakers/4.jpg" }]
+  const [sneakers, setSneakers] = useState([])
+  const [cartSneakers, setCartSneakers] = useState([])
+  const [cartOpened, setCartOpened] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+
+  useEffect(() => {
+    axios.get('https://60d9b9c25f7bf1001754768e.mockapi.io/items')
+      .then(res => setSneakers(res.data))
+  }, [])
+
+  useEffect(() => {
+    axios.get('https://60d9b9c25f7bf1001754768e.mockapi.io/cart')
+      .then(res => setCartSneakers(res.data))
+  }, [])
+
+  const onAddToCart = (items) => {
+    axios.post('https://60d9b9c25f7bf1001754768e.mockapi.io/cart', items)
+    setCartSneakers((prev) => [...prev, items])
+  }
+
+  const onDeleteItem = (id) => {
+    axios.delete(`https://60d9b9c25f7bf1001754768e.mockapi.io/cart/${id}`)
+    setCartSneakers((prev) => prev.filter(item => item.id !== id))
+  }
+
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  }
 
   return (
     <div className='wrapper clear'>
-      <Shadow>
-        <CartDrawer />
-      </Shadow>
-      <Header />
-      <div className='content p-40'>
-        <div className='d-flex justify-between align-center'>
-          <h1>All sneakers</h1>
-          <div className='search-block d-flex'>
-            <img src='/img/icons/search.svg' alt='searchButtonIcon' />
-            <input placeholder='Search...' />
-          </div>
-        </div>
-        <div className="d-flex justify-between mt-20">
-          {arr.map(card => <Card title={card.title} price={card.price} imageUrl={card.imageUrl} />)}
-        </div>
-      </div>
+      {
+        cartOpened &&
+        <Shadow onCloseShadow={() => setCartOpened(false)}>
+          <CartDrawer onClickBack={() => setCartOpened(false)} items={cartSneakers} onDelete={onDeleteItem} />
+        </Shadow>
+      }
+
+      <Header openCart={() => setCartOpened(true)} />
+
+      <Route path='/'>
+        <Home searchValue={searchValue} onChangeSearchInput={onChangeSearchInput} onAddToCart={onAddToCart} sneakers={sneakers} setSearchValue={setSearchValue} />
+      </Route>
+
     </div>
   )
 }

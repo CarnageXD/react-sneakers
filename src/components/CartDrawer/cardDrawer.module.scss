@@ -90,3 +90,34 @@
     overflow: auto;
     flex: 1;
   }
+
+  .emptyCart {
+    p {
+      text-align: center;
+      width: 280px;
+    }
+
+    .actionGreenBtn {
+      width: 245px;
+      margin-top: 20px;
+      background-color: #9DD458;
+      color: #fff;
+      border: 0;
+      border-radius: 18px;
+      height: 55px;
+      font-size: 16px;
+      width: 100%;
+      font-weight: 500;
+      cursor: pointer;
+      transition: .2s ease-in-out;
+      position: relative;
+  
+      &:hover {
+        background-color: lighten($color: #9dd458, $amount: 10%);
+        transform: translateY(-2px);        
+      }
+      &:active {
+        background-color: darken($color: #9dd458, $amount: 10%);      
+      }      
+    }  
+  }

@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './header.module.scss'
 
-export const Header = () => {
+export const Header = (props) => {
     return (
         <header className={`${s.header} d-flex justify-between align-center p-40`}>
             <div className="d-flex align-center">
@@ -13,7 +13,7 @@ export const Header = () => {
             </div>
             <div className='headerRight'>
                 <ul className='d-flex'>
-                    <li className='mr-30'>
+                    <li onClick={props.openCart} className='mr-30'>
                         <img src='/img/icons/cart.svg' alt='cartIcon' />
                         <span>450$</span>
                     </li>
